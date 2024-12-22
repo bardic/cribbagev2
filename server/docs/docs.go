@@ -56,8 +56,8 @@ const docTemplate = `{
                 }
             }
         },
-        "/admin/card/": {
-            "put": {
+        "/deck/": {
+            "get": {
                 "consumes": [
                     "application/json"
                 ],
@@ -65,93 +65,13 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "cards"
+                    "deck"
                 ],
-                "summary": "Update card by id",
-                "parameters": [
-                    {
-                        "description": "card Object to save",
-                        "name": "details",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/queries.Card"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/queries.Card"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {}
-                    }
-                }
-            },
-            "post": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "cards"
-                ],
-                "summary": "Create new card",
-                "parameters": [
-                    {
-                        "description": "card Object to save",
-                        "name": "details",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/queries.Card"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/queries.Card"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {}
-                    }
-                }
-            }
-        },
-        "/admin/match/": {
-            "delete": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "match"
-                ],
-                "summary": "Get match by barcode",
+                "summary": "Get deck by match id",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "search for match by barcode",
+                        "description": "search for deck by match id",
                         "name": "id",
                         "in": "query",
                         "required": true
@@ -161,153 +81,21 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/queries.Match"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {}
-                    }
-                }
-            }
-        },
-        "/card/": {
-            "delete": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "cards"
-                ],
-                "summary": "Get card by barcode",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "search for card by barcode",
-                        "name": "barcode",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Store in which the barcode was found",
-                        "name": "storeId",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/queries.Card"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {}
-                    }
-                }
-            }
-        },
-        "/player/allcards/": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "cards"
-                ],
-                "summary": "Get all cards",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/queries.Card"
-                            }
+                            "$ref": "#/definitions/vo.GameDeck"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {}
                     },
-                    "500": {
-                        "description": "Internal Server Error",
+                    "422": {
+                        "description": "Unprocessable Entity",
                         "schema": {}
                     }
                 }
             }
         },
-        "/player/kitty": {
-            "put": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "match"
-                ],
-                "summary": "Update kitty with ids",
-                "parameters": [
-                    {
-                        "description": "array of ids to add to kitty",
-                        "name": "details",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/vo.HandModifier"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/queries.Match"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {}
-                    }
-                }
-            }
-        },
-        "/player/match/": {
+        "/match/": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -318,11 +106,11 @@ const docTemplate = `{
                 "tags": [
                     "match"
                 ],
-                "summary": "Get match by id",
+                "summary": "Get match state by match id",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "search for match by id",
+                        "description": "match id",
                         "name": "id",
                         "in": "query",
                         "required": true
@@ -341,49 +129,6 @@ const docTemplate = `{
                     },
                     "422": {
                         "description": "Unprocessable Entity",
-                        "schema": {}
-                    }
-                }
-            },
-            "put": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "match"
-                ],
-                "summary": "Update match by id",
-                "parameters": [
-                    {
-                        "description": "match Object to update",
-                        "name": "details",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/queries.Match"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/queries.Match"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
                         "schema": {}
                     }
                 }
@@ -432,7 +177,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/player/match/cards/": {
+        "/match/cards/": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -443,11 +188,11 @@ const docTemplate = `{
                 "tags": [
                     "match"
                 ],
-                "summary": "Get match cards by id",
+                "summary": "Get match cards by match id",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "search for match by id",
+                        "description": "match id",
                         "name": "id",
                         "in": "query",
                         "required": true
@@ -474,7 +219,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/player/match/cut": {
+        "/match/cut": {
             "put": {
                 "consumes": [
                     "application/json"
@@ -485,7 +230,7 @@ const docTemplate = `{
                 "tags": [
                     "match"
                 ],
-                "summary": "Cut deck by index",
+                "summary": "Cut deck by index of card selected",
                 "parameters": [
                     {
                         "description": "Deck index that is to become the cut",
@@ -519,46 +264,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/player/match/deck/": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "deck"
-                ],
-                "summary": "Get deck by id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "search for deck by id",
-                        "name": "id",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/vo.GameDeck"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {}
-                    },
-                    "422": {
-                        "description": "Unprocessable Entity",
-                        "schema": {}
-                    }
-                }
-            }
-        },
-        "/player/match/join": {
+        "/match/join": {
             "put": {
                 "consumes": [
                     "application/json"
@@ -572,7 +278,7 @@ const docTemplate = `{
                 "summary": "Join match by id",
                 "parameters": [
                     {
-                        "description": "match Object to update",
+                        "description": "JoinMatchReq object",
                         "name": "details",
                         "in": "body",
                         "required": true,
@@ -603,85 +309,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/player/matches/open": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "match"
-                ],
-                "summary": "Get match by id",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/vo.GameMatch"
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {}
-                    },
-                    "422": {
-                        "description": "Unprocessable Entity",
-                        "schema": {}
-                    }
-                }
-            }
-        },
-        "/player/play": {
-            "put": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "match"
-                ],
-                "summary": "Update play with ids",
-                "parameters": [
-                    {
-                        "description": "array of ids to add to play",
-                        "name": "details",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/vo.HandModifier"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/queries.Match"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {}
-                    }
-                }
-            }
-        },
-        "/player/player/": {
+        "/match/player/": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -700,49 +328,6 @@ const docTemplate = `{
                         "name": "id",
                         "in": "query",
                         "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/queries.Player"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {}
-                    }
-                }
-            },
-            "put": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "players"
-                ],
-                "summary": "Update player by barcode",
-                "parameters": [
-                    {
-                        "description": "player Object to save",
-                        "name": "details",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/queries.Player"
-                        }
                     }
                 ],
                 "responses": {
@@ -851,7 +436,52 @@ const docTemplate = `{
                 }
             }
         },
-        "/player/ready": {
+        "/match/player//kitty": {
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "match"
+                ],
+                "summary": "Update kitty with ids",
+                "parameters": [
+                    {
+                        "description": "array of ids to add to kitty",
+                        "name": "details",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/vo.HandModifier"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/queries.Match"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/match/player/ready": {
             "put": {
                 "consumes": [
                     "application/json"
@@ -862,7 +492,7 @@ const docTemplate = `{
                 "tags": [
                     "players"
                 ],
-                "summary": "Update player to mark as ready",
+                "summary": "Update player by id to be ready. Returns true if all players are ready",
                 "parameters": [
                     {
                         "description": "player id to update",
@@ -879,6 +509,84 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "type": "boolean"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/matches/open": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "match"
+                ],
+                "summary": "Get match by id",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/vo.GameMatch"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {}
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/play": {
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "match"
+                ],
+                "summary": "Update play",
+                "parameters": [
+                    {
+                        "description": "HandModifier object",
+                        "name": "details",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/vo.HandModifier"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/queries.Match"
                         }
                     },
                     "400": {
@@ -940,9 +648,11 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "matchId": {
+                    "description": "MatchId",
                     "type": "integer"
                 },
                 "playerId": {
+                    "description": "PlayerId",
                     "type": "integer"
                 }
             }
@@ -1384,7 +1094,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "0.0.2",
+	Version:          "0.0.4",
 	Host:             "localhost:1323",
 	BasePath:         "/v1",
 	Schemes:          []string{},
